@@ -47,6 +47,7 @@ Global Commands:
   [--no-local]       skip processing of modman.local files
   [--no-clean]       skip cleaning of broken symlinks
   [--no-shell]       skip processing @shell lines
+  [--no-import]      skip processing @import lines
 
 Module Commands:
   $script <command> [<module>] [<options>] [[--] <VCS options>]
@@ -65,6 +66,7 @@ Module Commands:
   [--no-local]       skip processing of modman.local files
   [--no-clean]       skip cleaning of broken symlinks
   [--no-shell]       skip processing @shell lines
+  [--no-import]      skip processing @import lines
   [--basedir <path>] on checkout/clone, specifies a base for module deployment
   [--copy]           deploy by copying files instead of symlinks
   [<VCS options>]    specify additional parameters to VCS checkout/clone
@@ -446,6 +448,7 @@ apply_modman_file ()
 
     # Import other module definitions (e.g. git submodules, svn:externals, etc..)
     if [ "$target" = "@import" ]; then
+      [ $NOIMPORT -eq 0 ] || continue
       # check if base defined, create and save base to .basedir file
       read import_path import_base <<< $real
 
@@ -739,6 +742,7 @@ FORCE=0               # --force option off by default
 NOLOCAL=0             # --no-local option off by default
 NOCLEAN=0             # --no-clean off by default
 NOSHELL=0             # --no-shell option off by default
+NOIMPORT=0            # --no-import option off by default
 COPY=0                # --copy option off by default
 basedir=''
 while true; do
@@ -747,6 +751,7 @@ while true; do
     --no-local)    NOLOCAL=1; shift ;;
     --no-clean)    NOCLEAN=1; shift ;;
     --no-shell)    NOSHELL=1; shift ;;
+    --no-import)   NOIMPORT=1; shift ;;
     --copy)        COPY=1; shift ;;
     --basedir)
       shift; basedir="$1"; shift
@@ -1025,6 +1030,7 @@ while true; do
     --no-local)    NOLOCAL=1; shift ;;
     --no-clean)    NOCLEAN=1; shift ;;
     --no-shell)    NOSHELL=1; shift ;;
+    --no-import)   NOIMPORT=1; shift ;;
     --copy)        COPY=1; shift ;;
     --basedir)
       shift; basedir="$1"; shift

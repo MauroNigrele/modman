@@ -28,13 +28,13 @@ _modman()
 			opts="--force --no-clean --no-local"
 			;;
 		deploy | update)
-			opts="$(modman list) --force --no-clean --no-local --no-shell"
+			opts="$(modman list) --force --no-clean --no-local --no-shell --no-import"
 			;;
 		remove | automodman | undeploy)
 			opts=$(modman list)
 			;;
 		*)
-			[ -d "$mm/${prev}" ] && opts="--force --no-clean --no-local --no-shell"
+			[ -d "$mm/${prev}" ] && opts="--force --no-clean --no-local --no-shell --no-import"
 			;;
 	esac
 	COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
