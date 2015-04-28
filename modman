@@ -832,7 +832,7 @@ elif [ "$action" = "incoming" ]; then
 ###############################
 # Handle "deploy-all" command
 elif [ "$action" = "deploy-all" ]; then
-  if [ -n "$1" ]; then echo "Too many arguments to deploy-all command."; exit 1; fi
+  if [ -n "$2" ]; then echo "Too many arguments to deploy-all command."; exit 1; fi
   remove_dead_links
   errors=0
   for module in $(ls -1 "$mm"); do
